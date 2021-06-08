@@ -1,4 +1,4 @@
-export default [
+const pictures = [
   {
     preview:
       'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg',
@@ -63,3 +63,128 @@ export default [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+
+const galleryEl = document.querySelector('.js-gallery')
+
+const getURL = galleryEl.addEventListener('click', onImageClick)
+const modalContainer = document.querySelector(".js-lightbox")
+const modalImg = document.querySelector(".lightbox__image")
+const modalCloseBtn = document.querySelector ('button[data-action="close-lightbox"]')
+
+const modalOverlay = document.querySelector('.lightbox__overlay')
+
+const imgEl = galleryGenerator(pictures);
+
+galleryEl.insertAdjacentHTML('afterbegin', imgEl)
+
+
+
+/* Генератор разметки*/
+
+function galleryGenerator(pictures) {
+  return pictures.map(({ preview, original, description }) => {
+    return ` <li class= "gallery__item">
+      <a
+    class="gallery__link"
+    href="${original}"
+  >
+    <img
+      class="gallery__image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+    />
+  </a>
+</li>`
+  }
+  
+  ).join("")
+}
+
+
+function onImageClick(evt) {
+
+  evt.preventDefault()
+  
+  const imgEl = evt.target.classList.contains('gallery__image')
+
+
+  if (!imgEl) {
+ return
+  }
+
+  const imgURL = evt.target.dataset.source
+  const imgALT = evt.target.getAttribute ("alt")
+
+  modalContainer.classList.add ("is-open")
+
+  console.log(imgURL, imgALT)
+
+setImgAtributes(imgURL, imgALT)
+
+modalClose()
+
+
+
+}
+
+
+/* Поулчаем атрибуты для картинки в модалке*/
+
+function setImgAtributes(url, alt) {
+  modalImg.setAttribute("src", `${url}`)
+  modalImg.setAttribute("alt", `${alt}`) 
+}
+
+
+/* Закрытие модалки*/
+
+function modalClose() {
+
+  const isModalOpen = modalContainer.classList.contains("is-open")
+  if (!isModalOpen) {
+    return
+  }
+ /* Закртые по клику на кнопку */
+  modalCloseBtn.addEventListener("click", () => {
+    modalContainer.classList.remove("is-open")
+    atributesCleaning()
+  })
+  
+
+   /* Закртые по клику на оверлей */
+  modalOverlay.addEventListener("click", () => {
+    modalContainer.classList.remove("is-open")
+    atributesCleaning()
+
+  })
+
+  /* Закртые по клику на кнопку ескейп */
+  window.addEventListener('keydown', (evt) => {
+    if(evt.code === 'Escape'){
+    modalContainer.classList.remove("is-open")
+    atributesCleaning()
+    }
+  })
+
+
+}
+
+
+function atributesCleaning() {
+    modalImg.setAttribute("src", " ")
+  modalImg.setAttribute("alt", " ")
+}
+
+
+function nextImg() {
+    const isModalOpen = modalContainer.classList.contains("is-open")
+  if (!isModalOpen) {
+    return
+  }
+
+  
+}
+
+
