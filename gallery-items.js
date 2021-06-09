@@ -101,6 +101,9 @@ function galleryGenerator(pictures) {
 
 const openModal = galleryEl.addEventListener('click', onImageClick)
 
+
+/* Открытие модалки с правльной картинкой*/
+
 function onImageClick(evt) {
 
   evt.preventDefault()
