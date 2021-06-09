@@ -64,9 +64,7 @@ const pictures = [
   },
 ];
 
-
 const galleryEl = document.querySelector('.js-gallery')
-
 
 const modalContainer = document.querySelector(".js-lightbox")
 const modalImg = document.querySelector(".lightbox__image")
@@ -74,8 +72,6 @@ const modalImg = document.querySelector(".lightbox__image")
 const imgEl = galleryGenerator(pictures);
 
 galleryEl.insertAdjacentHTML('afterbegin', imgEl)
-
-
 
 /* Генератор разметки*/
 
@@ -101,7 +97,6 @@ function galleryGenerator(pictures) {
 
 const openModal = galleryEl.addEventListener('click', onImageClick)
 
-
 /* Открытие модалки с правльной картинкой*/
 
 function onImageClick(evt) {
@@ -122,7 +117,6 @@ function onImageClick(evt) {
 
 }
 
-
 /* Поулчаем атрибуты для картинки в модалке*/
 
 function setImgAtributes(url, alt) {
@@ -130,12 +124,8 @@ function setImgAtributes(url, alt) {
   modalImg.setAttribute("alt", `${alt}`) 
 }
 
-
 /* Закрытие модалки*/
-
-
 modalContainer.addEventListener('click', closeModal)
-
 
 function closeModal(evt) {
 
@@ -163,15 +153,12 @@ function closeModal(evt) {
 
 }
 
-
 /* Чистим атрибуты*/
 
 function atributesCleaning() {
   modalImg.setAttribute("src", " ")
   modalImg.setAttribute("alt", " ")
 }
-
-
 
 window.addEventListener('keydown', imageSwitch)
 
@@ -187,8 +174,6 @@ function imageSwitch(evt) {
       if (modalImg.src === pictures[i].original) {
         modalImg.src = pictures[(i += 1)].original
       }
-    
-      
     }
   }
 
@@ -201,8 +186,4 @@ function imageSwitch(evt) {
       
       }
       }
-
-
     }
-  
-
