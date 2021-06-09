@@ -67,12 +67,9 @@ const pictures = [
 
 const galleryEl = document.querySelector('.js-gallery')
 
-const getURL = galleryEl.addEventListener('click', onImageClick)
+
 const modalContainer = document.querySelector(".js-lightbox")
 const modalImg = document.querySelector(".lightbox__image")
-const modalCloseBtn = document.querySelector ('button[data-action="close-lightbox"]')
-
-const modalOverlay = document.querySelector('.lightbox__overlay')
 
 const imgEl = galleryGenerator(pictures);
 
@@ -102,6 +99,7 @@ function galleryGenerator(pictures) {
   ).join("")
 }
 
+const openModal = galleryEl.addEventListener('click', onImageClick)
 
 function onImageClick(evt) {
 
@@ -109,23 +107,15 @@ function onImageClick(evt) {
   
   const imgEl = evt.target.classList.contains('gallery__image')
 
-
   if (!imgEl) {
  return
   }
-
   const imgURL = evt.target.dataset.source
-  const imgALT = evt.target.getAttribute ("alt")
-
+  const imgALT = evt.target.getAttribute("alt")
+  
   modalContainer.classList.add ("is-open")
 
-  console.log(imgURL, imgALT)
-
-setImgAtributes(imgURL, imgALT)
-
-modalClose()
-
-
+  setImgAtributes(imgURL, imgALT)
 
 }
 
@@ -140,51 +130,76 @@ function setImgAtributes(url, alt) {
 
 /* Закрытие модалки*/
 
-function modalClose() {
+
+modalContainer.addEventListener('click', closeModal)
+
+
+function closeModal(evt) {
 
   const isModalOpen = modalContainer.classList.contains("is-open")
   if (!isModalOpen) {
     return
   }
- /* Закртые по клику на кнопку */
-  modalCloseBtn.addEventListener("click", () => {
-    modalContainer.classList.remove("is-open")
-    atributesCleaning()
-  })
+  else if (evt.target === modalImg) {
+    return
+  };
+
+  modalContainer.classList.remove("is-open")
   
-
-   /* Закртые по клику на оверлей */
-  modalOverlay.addEventListener("click", () => {
-    modalContainer.classList.remove("is-open")
-    atributesCleaning()
-
-  })
-
-  /* Закртые по клику на кнопку ескейп */
+   /* Закртые по клику на кнопку ескейп */
   window.addEventListener('keydown', (evt) => {
-    if(evt.code === 'Escape'){
-    modalContainer.classList.remove("is-open")
-    atributesCleaning()
+    if (evt.code === 'Escape') {
+      modalContainer.classList.remove("is-open")
     }
   })
+    
+    atributesCleaning()
+
+
 
 
 }
 
 
+/* Чистим атрибуты*/
+
 function atributesCleaning() {
-    modalImg.setAttribute("src", " ")
+  modalImg.setAttribute("src", " ")
   modalImg.setAttribute("alt", " ")
 }
 
 
-function nextImg() {
-    const isModalOpen = modalContainer.classList.contains("is-open")
+
+window.addEventListener('keydown', imageSwitch)
+
+function imageSwitch(evt) {
+  const isModalOpen = modalContainer.classList.contains("is-open")
   if (!isModalOpen) {
     return
   }
-
   
-}
+  if (evt.code === "ArrowRight") {
 
+    for (let i = 0; i < pictures.length - 1; i++) {
+      if (modalImg.src === pictures[i].original) {
+        modalImg.src = pictures[(i += 1)].original
+      }
+    
+      
+    }
+  }
+
+    if (evt.code === "ArrowLeft") {
+
+      for (let i = 1; i < pictures.length; i++) {
+        if (modalImg.src === pictures[i].original) {
+          modalImg.src = pictures[(i-=1)].original
+        }
+      
+      }
+      }
+
+
+    }
+  
 
