@@ -115,6 +115,11 @@ function onImageClick(evt) {
 
   setImgAtributes(imgURL, imgALT)
 
+  window.addEventListener('keydown', (evt) => {
+    if (evt.code === 'Escape') {
+      modalContainer.classList.remove("is-open")
+    }
+  })
 }
 
 /* Поулчаем атрибуты для картинки в модалке*/
@@ -140,16 +145,9 @@ function closeModal(evt) {
   modalContainer.classList.remove("is-open")
   
    /* Закртые по клику на кнопку ескейп */
-  window.addEventListener('keydown', (evt) => {
-    if (evt.code === 'Escape') {
-      modalContainer.classList.remove("is-open")
-    }
-  })
+  window.removeEventListener("keydown")
     
     atributesCleaning()
-
-
-
 
 }
 
@@ -187,3 +185,4 @@ function imageSwitch(evt) {
       }
       }
     }
+
